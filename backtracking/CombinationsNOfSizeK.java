@@ -9,27 +9,25 @@ import java.util.List;
 // You may return the answer in any order.
 public class CombinationsNOfSizeK {
 
-    private void generateCombinations(int k, LinkedList<Integer> comb, int first, List<Integer> input, List<List<Integer>> result) {
+    private void generateCombinations(int start, int n, int k, LinkedList<Integer> comb, List<List<Integer>> result) {
         if (comb.size() == k) {
             result.add(new ArrayList<>(comb));
         }
-        for (int i = first; i < input.size(); i++) {
-            comb.add(input.get(i));
-            generateCombinations(k, comb, i + 1, input, result);
+        for (int i = start; i <= n; i++) {
+            comb.add(i);
+            generateCombinations(i+1, n, k, comb,result);
             comb.removeLast();
         }
     }
 
     public List<List<Integer>> combine(int n, int k) {
         List<List<Integer>> result = new ArrayList<>();
-
-        List<Integer> input = new ArrayList<>();
-        for (int i = 1; i <= n; i++) {
-            input.add(i);
+        if (k == 0) {
+            return result;
         }
 
         LinkedList<Integer> comb = new LinkedList<>();
-        generateCombinations(k, comb, 0, input, result);
+        generateCombinations(1, n, k, comb, result);
 
         return result;
     }

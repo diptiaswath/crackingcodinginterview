@@ -10,7 +10,10 @@ package depthFirstSearch;
 
 // https://leetcode.com/problems/word-search/solution/
 public class WordSearch {
-
+    // {0, 1}: Move right (increase column index).
+    // {1, 0}: Move down (increase row index).
+    // {0, -1}: Move left (decrease column index).
+    // {-1, 0}: Move up (decrease row index).
     private char[][] board;
     private int nr;
     private int nc;
@@ -31,13 +34,13 @@ public class WordSearch {
         boolean ret = false;
         this.board[r][c] = '#';
 
-        int[] rowOffsets = {0, 1, 0, -1};
-        int[] colOffsets = {1, 0, -1, 0};
-        for (int i = 0; i < 4; i++) {
-            ret = backTrack(r + rowOffsets[i], c + colOffsets[i], word, index + 1);
+        for (int[] dir: dirs) {
+            int cr = r + dir[0];
+            int cc = c + dir[1];
+            ret = backtrack(cr, cc, word, index+1);
             if (ret) {
                 break;
-            };
+            }
         }
 
         // step4. clean up/revert and return result

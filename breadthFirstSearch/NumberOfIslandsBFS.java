@@ -1,58 +1,43 @@
-package breadthFirstSearch;
+// https://leetcode.com/problems/number-of-islands/
+// Time : O(m*n)
+// Space: O(m*n)
+class NumberOfIslandsBFS {
+    int nr = 0;
+    int nc = 0;
+    int[][] dirs = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
 
-import java.util.LinkedList;
-import java.util.Queue;
+    private void bfs(char[][] grid, int r, int c) {
+        Queue<int[]> queue = new LinkedList<>();
+        queue.offer(new int[]{r, c});
 
-//Uses BFS.
-//https://leetcode.com/problems/number-of-islands/solution/
-public class NumberOfIslandsBFS {
+        while (!queue.isEmpty()) {
+            int[] cur = queue.poll();
 
-    public int numOfIslands(char[][] grid) {
-        if (grid == null || grid.length == 0) {
-            return 0;
+            for (int[] dir: dirs) {
+                int cr = cur[0] + dir[0];
+                int cc = cur[1] + dir[1];
+
+                if (cr >=0 && cr < nr && cc >=0 && cc < nc && grid[cr][cc] == '1') {
+                    grid[cr][cc] = '0';
+                    queue.offer(new int[]{cr, cc});
+                }
+            }
         }
+    }
 
-        int nr = grid.length;
-        int nc = grid[0].length;
+    public int numIslands(char[][] grid) {
+        this.nr = grid.length;
+        this.nc = grid[0].length;
         int numOfIslands = 0;
 
         for (int r = 0; r < nr; r++) {
             for (int c = 0; c < nc; c++) {
                 if (grid[r][c] == '1') {
                     ++numOfIslands;
-
-                    // start BFS
-                    grid[r][c] = '0'; // mark as visited
-                    Queue<Integer> queue = new LinkedList<Integer>();
-                    queue.add(r * nc + c);
-                    while (!queue.isEmpty()) {
-                        int neighbor = queue.remove();
-                        int neighborRow = neighbor/nc;
-                        int neighborCol = neighbor % nc;
-
-                        if (neighborRow - 1 >= 0 && grid[neighborRow - 1][neighborCol] != '0') {
-                            queue.add((neighborRow - 1) * nc + neighborCol);
-                            grid[neighborRow -1][neighborCol] = '0';
-                        }
-                        if (neighborRow + 1 < nr && grid[neighborRow + 1][neighborCol] != '0') {
-                            queue.add((neighborRow + 1) * nc + neighborCol);
-                            grid[neighborRow + 1][neighborCol] = '0';
-                        }
-                        if (neighborCol - 1 >= 0 && grid[neighborRow][neighborCol - 1] != '0') {
-                            queue.add(neighborRow * nc + (neighborCol - 1));
-                            grid[neighborRow][neighborCol - 1] = '0';
-                        }
-                        if (neighborCol + 1 < nc && grid[neighborRow][neighborCol + 1] != '0') {
-                            queue.add(neighborRow * nc + (neighborCol + 1));
-                            grid[neighborRow][neighborCol + 1] = '0';
-                        }
-                    } // while queue is not empty
-
-                } // if-loop
-            } // for c-loop
-        } // for r-loop
+                    bfs(grid, r, c);
+                }
+            }
+        }
         return numOfIslands;
     }
-
 }
-

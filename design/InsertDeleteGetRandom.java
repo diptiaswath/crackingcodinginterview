@@ -19,7 +19,8 @@ public class InsertDeleteGetRandom {
             return false;
         }
         hashmap.put(val, list.size());
-        list.add(list.size(), val);
+        // pay special attention to this
+        list.add(val);
         return true;
     }
 

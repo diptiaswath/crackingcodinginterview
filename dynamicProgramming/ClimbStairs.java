@@ -4,6 +4,27 @@ package dynamicProgramming;
 
 // RECURSIVE + DP
 public class ClimbStairs {
+    // O(n) time complexity
+    // Using memoization
+    public int climbStairs(int n) {
+        int[] memo = new int[n + 1];
+        return climbStairs(0, n, memo);
+    }
+
+    private int climbStairs(int i, int n, int[] memo) {
+        if (i > n) {
+            return 0;
+        }
+        if (i == n) {
+            return 1;
+        }
+        if (memo[i] > 0) {
+            return memo[i];
+        }
+        memo[i] = climbStairs(i + 1, n, memo) + climbStairs(i+2, n, memo);
+        return memo[i];
+    }
+
 
     //O(n) time complexity
     // no of ways to climb ith step = no of ways to climb i-1th step + no of ways to climb i-2th step
@@ -24,7 +45,7 @@ public class ClimbStairs {
 
     // O(2^n) for recursive approach
     // n this brute force approach we take all possible step combinations i.e. 1 and 2, at every step.
-    // At every step we are calling the function climbStairsclimbStairsclimbStairs for step 1 and 2, and
+    // At every step we are calling the function climbStairs for step 1 and 2, and
     // return the sum of returned values of both functions.
     //
     //climbStairs(i,n)= climbStairs(i+1,n) + climbStairs(i+2,n)

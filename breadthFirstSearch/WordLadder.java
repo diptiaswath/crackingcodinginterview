@@ -6,6 +6,8 @@ import java.util.*;
 // return the number of words in the shortest transformation sequence from beginWord to endWord,
 // or 0 if no such sequence exists.
 // https://leetcode.com/problems/word-ladder/
+
+// O (m^2 * n) where m is length of each word, and n = number of words
 class Pair<String, Integer> {
     String word;
     Integer level;
@@ -22,7 +24,7 @@ public class WordLadder {
         Map<String, List<String>> allDict = new HashMap<String, List<String>>();
 
         for (String word : wordList) {
-            for (int i = 0; i < word.length(); i++) {
+            for (int i = 0; i < word.length(); i++) { // TIP : IMPORTANT
                 String newWord = word.substring(0, i) + "*" + word.substring(i + 1);
 
                 List<String> transforms = allDict.getOrDefault(newWord, new ArrayList<>());
@@ -54,10 +56,10 @@ public class WordLadder {
                     if (!visited.containsKey(neighborWord)) {
                         queue.add(new Pair<>(neighborWord, currentWordLevel + 1));
                         visited.put(neighborWord, true);
-                    }
-                }
-            }
-        }
+                    } // IF
+                } // close for for all neigh of transformed word
+            } // for each index of current word
+        } // while
         return 0;
     }
 

@@ -1,7 +1,7 @@
 package heaps;
 
 import java.util.PriorityQueue;
-
+// https://leetcode.com/problems/kth-largest-element-in-an-array/submissions/1308938263/
 public class KthLargestElement {
 
     // use a min heap with elements in asc order
@@ -12,14 +12,15 @@ public class KthLargestElement {
     public int findKthLargest(int[] nums, int k) {
         PriorityQueue<Integer> heap = new PriorityQueue<Integer>((n1, n2) -> n1 - n2);
 
-        // keep kth largest elements in the heap
         for (int num: nums) {
-            heap.add(num);
-            if (heap.size() > k) {
+            if (heap.size() < k) {
+                heap.offer(num);
+            } else if (num > heap.peek()) {
                 heap.poll();
+                heap.offer(num);
             }
         }
-        return heap.poll();
+        return heap.peek();
     }
 
 

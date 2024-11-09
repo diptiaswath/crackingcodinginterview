@@ -15,15 +15,19 @@ class ListNode {
 public class PalindromeLinkedList {
 
     private ListNode reverseList(ListNode head) {
-        ListNode prev = null;
-        ListNode cur = head;
-        while (cur != null) {
-            ListNode temp = cur.next;
-            cur.next = prev;
-            prev = cur;
-            cur = temp;
+        LinkedListNode prev = null;
+        LinkedListNode next = null;
+        LinkedListNode curr = head;
+
+        while (curr != null) {
+            next = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = next;
         }
-        return prev;
+
+        head = prev;
+        return head;
     }
 
     public boolean isPalindrome(ListNode head) {

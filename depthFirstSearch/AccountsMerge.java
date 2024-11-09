@@ -69,7 +69,6 @@ public class AccountsMerge {
                 DFS(mergedAccount, accountFirstEmail);
 
                 Collections.sort(mergedAccount.subList(1, mergedAccount.size()));
-
                 mergedAccounts.add(mergedAccount);
             }
         }

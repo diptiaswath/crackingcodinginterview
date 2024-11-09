@@ -27,7 +27,7 @@ public class CoinChangeToMakeAmountS {
     }
 
     // Approach2: Top down with memo
-    // Time O (S * N)
+    // Time O (S * N), where S = amount, N = coins or denominations
     // Space O(S)
     private Integer[] memo = null;
     public int coinChangeA2(int[] coins, int amount) {

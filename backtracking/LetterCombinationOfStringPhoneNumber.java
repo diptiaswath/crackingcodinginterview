@@ -8,39 +8,38 @@ import java.util.Map;
 // Time complexity: O(4^N * N)where N is the length of digits.
 // Note that 4 in this expression is referring to the maximum value length in the hash map, and not to the length of the input.
 public class LetterCombinationOfStringPhoneNumber {
-    private List<String> combinations = new ArrayList<>();
-    private Map<Character, String> letters = Map.of('2', "abc",
-            '3', "def",
-            '4', "ghi",
-            '5', "jkl",
-            '6', "mno",
-            '7', "pqrs",
-            '8', "tuv",
-            '9', "wxyz");
-    private String phoneDigit;
-
-    private void combine(int start, StringBuilder path) {
-        // if new stringB is same as phoneDigits.length, then add stringB and return
-        if (path.length() == phoneDigit.length()) {
+    public void backtrack(int index, StringBuilder path, String digits, Map<Character, String[]> letters, List<String> combinations) {
+        if (path.length() == digits.length()) {
             combinations.add(path.toString());
             return;
         }
-        String letterDigits = letters.get(phoneDigit.charAt(start));
 
-        // iterate over all possible letters for phone digit at start
-        for (char c : letterDigits.toCharArray()) {
-            path.append(c);
-            combine(start + 1, path);
+        char digit = digits.charAt(index);
+        String[] possibleLetters = letters.get(digit);
+        for (String letter : possibleLetters) {
+            path.append(letter);
+            backtrack(index + 1, path, digits, letters, combinations);
             path.deleteCharAt(path.length() - 1);
         }
     }
 
     public List<String> letterCombinations(String digits) {
+        List<String> combinations = new ArrayList<>();
         if (digits.length() == 0) {
             return combinations;
         }
-        this.phoneDigit = digits;
-        combine(0, new StringBuilder());
+        Map<Character, String[]> digitsMapping = new HashMap<>();
+        digitsMapping.put('1', new String[]{""});
+        digitsMapping.put('2', new String[]{"a", "b", "c"});
+        digitsMapping.put('3', new String[]{"d", "e", "f"});
+        digitsMapping.put('4', new String[]{"g", "h", "i"});
+        digitsMapping.put('5', new String[]{"j", "k", "l"});
+        digitsMapping.put('6', new String[]{"m", "n", "o"});
+        digitsMapping.put('7', new String[]{"p", "q", "r", "s"});
+        digitsMapping.put('8', new String[]{"t", "u", "v"});
+        digitsMapping.put('9', new String[]{"w", "x", "y", "z"});
+        backtrack(0, new StringBuilder(), digits, digitsMapping, combinations);
+
         return combinations;
     }
 }

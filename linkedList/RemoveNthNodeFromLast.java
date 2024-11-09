@@ -20,21 +20,25 @@ public class RemoveNthNodeFromLast {
     //Time complexity : O(L).
     //
     //The algorithm makes one traversal of the list of L nodes. Therefore time complexity is O(L).
-    public ListNode removeNthFromEnd(ListNode head, int n) {
-        ListNode dummy = new ListNode(0);
-        dummy.next = head;
-        ListNode first = dummy;
-        ListNode second = dummy;
+    public static LinkedListNode removeNthLastNode(LinkedListNode head, int n) {
+        LinkedListNode right = head;
+        LinkedListNode left = head;
 
-        for (int i = 1; i <= n + 1; i++) {
-            first = first.next;
+        for (int i = 0; i < n; i++) {
+            right = right.next;
         }
 
-        while (first != null) {
-            first = first.next;
-            second = second.next;
+        if (right == null) {
+            return head.next;
         }
-        second.next = second.next.next;
-        return dummy.next;
+
+        while (right.next != null) {
+            right = right.next;
+            left = left.next;
+        }
+
+        left.next = left.next.next;
+
+        return head;
     }
 }
