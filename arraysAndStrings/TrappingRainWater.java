@@ -64,14 +64,14 @@ public class TrappingRainWater {
                 if (height[left] >= leftMax) {
                     leftMax = height[left];
                 } else {
-                    ans += Math.min(leftMax, height[left]);
+                    ans += leftMax - height[left];
                 }
                 left++;
             } else {
                 if (height[right] >= rightMax) {
                     rightMax = height[right];
                 } else {
-                    ans += Math.min(rightMax, height[right]);
+                    ans += rightMax - height[right];
                 }
                 right--;
             }
